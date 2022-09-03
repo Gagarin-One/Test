@@ -1,20 +1,29 @@
 .wrapper{
   width: 1000px;
   font-size:20px;
+ 
 }
 .columns{
   display:flex;
   width:80%;
-  margin:0 50px;
+  margin:0 62px;
+
 }
 .column{
-  margin:20px 50px;
+  display: flex;
+  flex-direction:column;
+  margin:7px 40px;
   position: relative;
+  width: 150px;
+  height:50px;
 }
-
+.nodeWrapper{
+  position: relative;
+  margin:35px 0
+}
 .node{
 
-  margin: 20px 0 ;
+  margin: 0px 0 ;
   width: 130px;
   height: 50px;
 
@@ -22,8 +31,8 @@
   border-radius:5px;
   text-align:center;
   z-index: 3;
-  background-color:rgb(231, 230, 230)
-
+  background-color:rgb(231, 230, 230);
+  position: absolute;
 }
 .node div{
   margin-top: 10px;
