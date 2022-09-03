@@ -22,7 +22,7 @@
   margin:35px 0
 }
 .node{
-
+  cursor:pointer;
   margin: 0px 0 ;
   width: 130px;
   height: 50px;
@@ -34,6 +34,9 @@
   background-color:rgb(231, 230, 230);
   position: absolute;
 }
+.node:hover:active {
+  cursor: grab;
+  }
 .node div{
   margin-top: 10px;
 }
