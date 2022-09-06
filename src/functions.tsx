@@ -56,11 +56,11 @@ export const splitColumns = (columns:edgesType[][]) => {
     lastColumn.push(columns[columns.length - 1][i].toId)
   }
   arr.push(lastColumn)
-  sortColumns(columns,arr)
+  sortNodes(columns,arr)
   return arr
 }
 
-const sortColumns = (edgesColumns:edgesType[][],nodesColumns:number[][]) => {
+const sortNodes = (edgesColumns:edgesType[][],nodesColumns:number[][]) => {
   // сортируем колонки для спрямления тех нод, у которых одная входящая линия
   // тем самым избавляясь от пересечения линий выставляя для таких нод приоритет
 
