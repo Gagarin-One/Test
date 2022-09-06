@@ -56,7 +56,57 @@ export const splitColumns = (columns:edgesType[][]) => {
     lastColumn.push(columns[columns.length - 1][i].toId)
   }
   arr.push(lastColumn)
+  sortColumns(columns,arr)
   return arr
+}
+
+const sortColumns = (edgesColumns:edgesType[][],nodesColumns:number[][]) => {
+  // сортируем колонки для спрямления тех нод, у которых одная входящая линия
+  // тем самым избавляясь от пересечения линий выставляя для таких нод приоритет
+
+  for (let i = 0; i < edgesColumns.length; i++){
+    let OneIncoming = [] // массив из объектов для всех нод в которые входит одна линия
+    for (let j = 0; j < edgesColumns[i].length; j++){
+      // находим эти ноды и пушим
+      const arr = edgesColumns[i].filter((item, index) => 
+      item.toId === edgesColumns[i][j].toId && 
+      index !== edgesColumns[i].indexOf(edgesColumns[i][j])
+      )
+      arr.length === 0 && OneIncoming.push(
+        {
+          fromId:edgesColumns[i][j].fromId,
+          toId:edgesColumns[i][j].toId
+        }
+      )
+    }
+    for (let incIndex = 0; incIndex < OneIncoming.length; incIndex++){
+      //находим индекс нод для их замены в массиве для последующей отрисовки
+      let fromIdIndex = 0
+      let toIdIndex = 0
+      let currentCol = 0
+    
+      for (let j = 0; j < nodesColumns.length; j++){
+        for (let k = 0; k < nodesColumns[j].length; k++){
+          // находим индекс для исходящего id ноды
+          if(nodesColumns[j][k] === OneIncoming[incIndex].fromId){
+            fromIdIndex = nodesColumns[j].indexOf(nodesColumns[j][k])
+          }
+          // находим индекс для входящего id ноды
+          if(nodesColumns[j][k] === OneIncoming[incIndex].toId){
+            toIdIndex = nodesColumns[j].indexOf(nodesColumns[j][k])
+            // индекс для текущей колонки
+            currentCol = j
+          }
+        }
+      }
+      // меняем местами перекрещивающиеся ноды и устанавливаем в основной массив
+      if(fromIdIndex !== toIdIndex){
+        let colArr = [...nodesColumns[currentCol]] as []
+        [colArr[fromIdIndex],colArr[toIdIndex]] = [colArr[toIdIndex],colArr[fromIdIndex]]
+        nodesColumns[currentCol] = colArr
+      }
+    }
+  }
 }
 
 export const createColumns = (requestedGraph:graphType) => {
